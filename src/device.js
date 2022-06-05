@@ -42,6 +42,40 @@ class OpenBlockDevice {
                         }
                         matched = true;
                         devicesThumbnailData.push(content);
+                        if (content.typeList) {
+                            const tempId = content.deviceId;
+                            const tempExtensions = [];
+                            content.deviceExtensions.forEach((itemE, idxE) => {
+                                tempExtensions[idxE] = (itemE);
+                            });
+                            let tempExtCompatible = content.deviceExtensionsCompatible;
+                            tempExtCompatible = tempExtCompatible.replace(tempExtCompatible[0],
+                                tempExtCompatible[0].toUpperCase());
+                            const pos = tempId.indexOf('_');
+
+                            content.typeList.forEach((item, idx) => {
+                                const contentT = JSON.parse(JSON.stringify(content));
+                                const deviceType = item;
+                                if (pos === -1) {
+                                    contentT.deviceId = deviceType + tempId.replace(tempId[0], tempId[0].toUpperCase());
+                                } else {
+                                    let baseType = tempId.substr(pos + 1);
+                                    baseType = baseType.replace(baseType[0], baseType[0].toUpperCase());
+                                    const deviceName = tempId.substr(0, pos);
+                                    contentT.deviceId = `${deviceName}_${deviceType}${baseType}`;
+                                }
+
+                                contentT.deviceExtensions.forEach((itemE, idxE) => {
+                                    contentT.deviceExtensions[idxE] = deviceType + tempExtensions[idxE];
+                                });
+                                contentT.deviceExtensionsCompatible = deviceType + tempExtCompatible;
+                                const programMode = contentT[`${deviceType}ProgramMode`];
+                                if (programMode) {
+                                    contentT.programMode = programMode;
+                                }
+                                devicesThumbnailData.push(contentT);
+                            });
+                        }
                     }
                 });
             });
