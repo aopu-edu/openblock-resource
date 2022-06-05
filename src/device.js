@@ -53,7 +53,7 @@ class OpenBlockDevice {
                                 tempExtCompatible[0].toUpperCase());
                             const pos = tempId.indexOf('_');
 
-                            content.typeList.forEach((item, idx) => {
+                            content.typeList.forEach(item => {
                                 const contentT = JSON.parse(JSON.stringify(content));
                                 const deviceType = item;
                                 if (pos === -1) {
