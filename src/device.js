@@ -73,6 +73,10 @@ class OpenBlockDevice {
                                 if (programMode) {
                                     contentT.programMode = programMode;
                                 }
+                                const baudrate = contentT[`${deviceType}DefaultBaudRate`];
+                                if (baudrate) {
+                                    contentT.defaultBaudRate = baudrate;
+                                }
                                 devicesThumbnailData.push(contentT);
                             });
                         }
