@@ -29,7 +29,7 @@ if (!repo) {
 }
 
 const getLatest = () => {
-    let url = `https://gitee.com/api/v5/repos/${repo}//releases/latest`;
+    let url = `https://api.github.com/repos/${repo}/releases/latest`;
 
     if (cdn) {
         url = `${cdn}/${url}`;
@@ -101,12 +101,10 @@ getLatest()
         let checksum;
 
         assets.forEach(asset => {
-            if (asset.name) {
-                if (asset.name.includes('checksums')) {
-                    checksum = asset;
-                } else if (asset.name.includes('external-resources')) {
-                    resource = asset;
-                }
+            if (asset.name.includes('checksums')) {
+                checksum = asset;
+            } else if (asset.name.includes('external-resources')) {
+                resource = asset;
             }
         });
 
