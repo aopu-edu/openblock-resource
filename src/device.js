@@ -64,10 +64,16 @@ class OpenBlockDevice {
                                     const deviceName = tempId.substr(0, pos);
                                     contentT.deviceId = `${deviceName}_${deviceType}${baseType}`;
                                 }
-
-                                contentT.deviceExtensions.forEach((itemE, idxE) => {
-                                    contentT.deviceExtensions[idxE] = deviceType + tempExtensions[idxE];
-                                });
+                                
+                                const deviceExtensions = contentT[`${deviceType}DeviceExtensions`];
+                                if (deviceExtensions) {
+                                    contentT.deviceExtensions = deviceExtensions;
+                                } else {
+                                    contentT.deviceExtensions.forEach((itemE, idxE) => {
+                                        contentT.deviceExtensions[idxE] = deviceType + tempExtensions[idxE];
+                                    });
+                                }
+                                
                                 contentT.deviceExtensionsCompatible = deviceType + tempExtCompatible;
                                 const programMode = contentT[`${deviceType}ProgramMode`];
                                 if (programMode) {
