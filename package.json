@@ -32,7 +32,8 @@
   "pkg": {
     "outputPath": "./dist",
     "assets": [
-      "external-resources/*"
+      "external-resources/*",
+      "certificates/*"
     ]
   },
   "author": "ArthurZheng",
