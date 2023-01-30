@@ -1,0 +1,52 @@
+'use strict';
+
+const path = require('path');
+const webpack = require('webpack');
+
+const manifest = require('./package.json');
+
+const _externals = function () {
+    const dependencies = manifest.dependencies;
+    const externals = {};
+    for (const p in dependencies) {
+        externals[p] = 'commonjs ' + p;
+    }
+    return externals;
+};
+
+const externals = _externals();
+
+module.exports = {
+    mode: 'production',
+    entry: './test/start-server.js',
+    externals: externals,
+    target: 'node',
+    output: {
+        path: path.resolve(__dirname, 'build/'),
+        filename: 'bundle.js'
+    },
+    node: {
+        __dirname: true
+    },
+    module: {
+        rules: [
+            {
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [['@babel/preset-env', {
+                            targets: {
+                                node: true
+                            }
+                        }]]
+                    }
+                },
+                test: /\.js$/,
+                exclude: /node_modules/
+            }
+        ]
+    },
+    optimization: {
+        minimize: true
+    }
+};
