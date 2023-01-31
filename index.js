@@ -145,7 +145,7 @@ class OpenblockResourceServer extends Emitter{
         return this.updater.update(this._latestVersion, option);
     }
 
-    listen (port = null) {
+    monitor (port = null) {
         const server = new ResourceServer(this._userDataPath);
 
         server.on('error', e => {
