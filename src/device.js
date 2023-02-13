@@ -22,7 +22,7 @@ class OpenBlockDevice {
         });
 
         // eslint-disable-next-line global-require
-        const deviceList = require(path.join(userDataPath, this.type, 'device.js'));
+        const deviceList = require('../../.openblockData/external-resources/devices/device');
         deviceList.forEach(listItem => {
             let matched = false;
             Object.entries(devices).forEach(catlog => {

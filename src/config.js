@@ -10,7 +10,7 @@ const DIRECTORY_NAME = 'external-resources';
  * The path of default user data directory.
  * @readonly
  */
-const DEFAULT_USER_DATA_PATH = path.join(__dirname, '../../.openblockData');
+const DEFAULT_USER_DATA_PATH = path.join(process.cwd(), '../.openblockData');
 
 /**
  * The locale of default.
