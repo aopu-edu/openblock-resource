@@ -10,7 +10,7 @@
     "clean": "rimraf external-resources dist translation download ../.openblockData/external-resources",
     "build:extension": "node script/generate-extension-page.js --url=https://openblockcc.github.io/external-resources/",
     "build:device": "node script/generate-device-page.js --url=https://openblockcc.github.io/external-resources/",
-    "build": "rimraf dist && webpack && pkg package.json -t node14-linux",
+    "build": "rimraf dist && webpack && pkg package.json -t node16-linux",
     "deploy": "npm run fetch && npm run build",
     "ext:opt-size": "opt-size --dir=external-resources",
     "ext:gen-config": "gen-config --dir=external-resources --repo=openblockcc/external-resources-v2",
