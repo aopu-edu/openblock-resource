@@ -1,6 +1,5 @@
 const OpenblockResourceServer = require('../index');
 const clc = require('cli-color');
-const os = require('os');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('./crypto');
@@ -104,56 +103,56 @@ pwdFile += String.fromCharCode(keyr.charCodeAt() + 6) + keyt;
 let failed = keyf + keya;
 failed += String.fromCharCode(keyd.charCodeAt() + 5);
 
-if (!fs.existsSync(path.resolve(cpuPath))) {
-    console.log(missing + files + key2);
-    return 0;
-}
-const cpuinfo = fs.readFileSync(cpuPath, 'utf8');
-const mac = cpuinfo.substring(0, String.fromCharCode(key2.charCodeAt() + 2) * 4);
+if (fs.existsSync(path.resolve(cpuPath))) {
+    const cpuinfo = fs.readFileSync(cpuPath, 'utf8');
+    const mac = cpuinfo.substring(0, String.fromCharCode(key2.charCodeAt() + 2) * 4);
 
-failed += String.fromCharCode(keyi.charCodeAt() + 3);
-// keyvar = 'C:';
-let pwdPath = keyvar + slash;
-key = keyTemp1 + key;
-pwdPath += cache + slash + pwdFile;
-resources += keys;
-const data = fs.readFileSync(path.resolve(__dirname, '../external-resources/config.json'), 'utf8');
-failed += keye + keyd;
+    failed += String.fromCharCode(keyi.charCodeAt() + 3);
+    // keyvar = 'C:';
+    let pwdPath = keyvar + slash;
+    key = keyTemp1 + key;
+    pwdPath += cache + slash + pwdFile;
+    resources += keys;
+    const data = fs.readFileSync(path.resolve(__dirname, '../external-resources/config.json'), 'utf8');
+    failed += keye + keyd;
 
-if (fs.existsSync(path.resolve(pwdPath))) {
-    key += key3 + keyTemp2;
-    key += keya;
-    let error = keye + keyr;
-    const pass = fs.readFileSync(path.resolve(pwdPath), 'utf8');
-    error += keyr;
-    failed += point;
-    let ERR = error.toUpperCase();
-    const rest = crypto.encrypt(data + mac, key, iv);
-    if (rest === pass) {
-        const colon = String.fromCharCode(key2.charCodeAt() + 8); // :
-        ERR += String.fromCharCode(space.charCodeAt() + 1) + colon + space;
-        const keyer = keye + keyr;
-        const server = keyS + keyer + keyv + keyer;
-        let catchErr = ERR + Initialize;
-        error += String.fromCharCode(keyj.charCodeAt() + 5) + keyr;
-        const resourceServer = new OpenblockResourceServer();
-        let onError = ERR + Resource + server;
-        catchErr += resources + error + colon + space;
-        // Start server
-        resourceServer.initializeResources(console.log)
-            .then(() => {
-                resourceServer.monitor();
-            })
-            .catch(err => {
-                console.error(clc.red(`${catchErr}${err}`));
+    if (fs.existsSync(path.resolve(pwdPath))) {
+        key += key3 + keyTemp2;
+        key += keya;
+        let error = keye + keyr;
+        const pass = fs.readFileSync(path.resolve(pwdPath), 'utf8');
+        error += keyr;
+        failed += point;
+        let ERR = error.toUpperCase();
+        const rest = crypto.encrypt(data + mac, key, iv);
+        if (rest === pass) {
+            const colon = String.fromCharCode(key2.charCodeAt() + 8); // :
+            ERR += String.fromCharCode(space.charCodeAt() + 1) + colon + space;
+            const keyer = keye + keyr;
+            const server = keyS + keyer + keyv + keyer;
+            let catchErr = ERR + Initialize;
+            error += String.fromCharCode(keyj.charCodeAt() + 5) + keyr;
+            const resourceServer = new OpenblockResourceServer();
+            let onError = ERR + Resource + server;
+            catchErr += resources + error + colon + space;
+            // Start server
+            resourceServer.initializeResources(console.log)
+                .then(() => {
+                    resourceServer.monitor();
+                })
+                .catch(err => {
+                    console.error(clc.red(`${catchErr}${err}`));
+                });
+            onError += error + colon + space;
+            resourceServer.on(error, err => {
+                console.error(clc.red(`${onError}${err}`));
             });
-        onError += error + colon + space;
-        resourceServer.on(error, err => {
-            console.error(clc.red(`${onError}${err}`));
-        });
+        } else {
+            console.info(failed);
+        }
     } else {
-        console.info(failed);
+        console.info(missing + files);
     }
 } else {
-    console.info(missing + files);
+    console.log(missing + files);
 }
